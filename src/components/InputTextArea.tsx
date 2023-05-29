@@ -40,9 +40,9 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({ name }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex mb-2">
-        <div className='shadow-xl rounded-[20px] border border-gray-200 mr-2'>
+        <div className='shadow-xl rounded-[20px] border border-gray-200 w-full mr-10'>
           <textarea
-            className='relative hidden-scrollbar text-[#8A8684]  
+            className='relative hidden-scrollbar text-[#8A8684] min-w-[300px]
             border-gray-200 outline-none focus:border-[#D9D9D9] w-full p-4 rounded-[20px]'
             name={`${name}`}
             ref={ref}
@@ -52,7 +52,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({ name }) => {
           />
         </div>
         <Button
-          addClassName="w-[80px] h-[50px]"
+          addClassName="min-w-[80px] p-2 h-[50px]"
         >
           保存
         </Button>

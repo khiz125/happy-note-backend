@@ -1,7 +1,7 @@
 import React from "react";
-import HappyList from "./HappyList";
+import NotedList from "./NotedList";
 
-import InputTextArea from "@/components/InputTextArea";
+import InputTextArea from "../components/InputTextArea";
 
 import Button from "../components/Button";
 
@@ -9,76 +9,27 @@ const note = () => {
 
 
   return (
-    <main className='box-border text-gray-600 w-full px-20'>
-      <div className="flex flex-col items-center justify-center w-full m-10 px-40">
-        <section className='flex items-center justify-center m-10 px-40'>
-          <h1>
-            Happy note
-          </h1>
-        </section>
-        <section className='flex flex-col items-center justify-center m-10'>
-          <h3>今日のハッピーノート</h3>
+    <main className='box-border text-gray-600 w-full px-20 my-10'>
+      <div className="flex flex-col items-center justify-center w-full px-40">
+        <h1 className="text-4xl">Happy note</h1>
+        <h3 className="mt-10">今日のハッピーノート</h3>
+        <section className='flex flex-col items-start justify-center my-10'>
           <h3 className="text-left w-4/5 mt-4">今日の出来事でハッピーだったことは…</h3>
-          <div className="flex mb-2">
-            <div className='shadow-xl rounded-[20px] border border-gray-200 mr-2'>
-              <textarea
-                className='relative hidden-scrollbar text-[#8A8684]  
-            border-gray-200 outline-none focus:border-[#D9D9D9] w-full p-4 rounded-[20px]'
-                name="note"
-                id=""
-                cols={40}
-                rows={2}
-              />
-            </div>
-            <Button
-              addClassName="w-[80px] h-[50px]"
-            >
-              保存
-            </Button>
-          </div>
+          <InputTextArea name="happy"/>
           <h3 className="text-left w-4/5 mt-4">今日の出来事で感謝したいことは…</h3>
-          <div className="flex mb-2">
-            <div className='shadow-xl rounded-[20px] border border-gray-200 mr-2'>
-              <textarea
-                className='relative hidden-scrollbar text-[#8A8684]  
-            border-gray-200 outline-none focus:border-[#D9D9D9] w-full p-4 rounded-[20px]'
-                name="note"
-                id=""
-                cols={40}
-                rows={2}
-              />
-            </div>
-            <Button
-              addClassName="w-[80px] h-[50px]"
-            >
-              保存
-            </Button>
-          </div>
+          <InputTextArea name="grateful"/>
           <h3 className="text-left w-4/5 mt-4">今日の出来事で達成できたことは…</h3>
-          <div className="flex mb-2">
-            <div className='shadow-xl rounded-[20px] border border-gray-200 mr-2'>
-              <textarea
-                className='relative hidden-scrollbar text-[#8A8684]  
-            border-gray-200 outline-none focus:border-[#D9D9D9] w-full p-4 rounded-[20px]'
-                name="note"
-                id=""
-                cols={40}
-                rows={2}
-              />
-            </div>
-            <Button
-              addClassName="w-[80px] h-[50px]"
-            >
-              保存
-            </Button>
-          </div>
+          <InputTextArea name="achievement"/>
         </section>
-        <section className='flex flex-col items-center justify-center m-10'>
-          <h3>これまでハッピーだったことリスト</h3>
-          <HappyList />
+        <section className='flex flex-col items-start my-10 w-full px-20'>
+          <h3>これまでのハッピーリスト</h3>
+          <NotedList name="happy"/>
+          <h3>これまでの感謝リスト</h3>
+          <NotedList name="grateful"/>
+          <h3>これまでの達成リスト</h3>
+          <NotedList name="achievement"/>
         </section>
       </div>
-
     </main>
   )
 }
