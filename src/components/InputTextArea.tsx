@@ -1,36 +1,33 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import axios from 'axios';
 import Button from './Button';
+import { NotesContext } from '../note/Note';
 
 interface InputTextAreaProps {
   name: string;
 }
 
 const InputTextArea: React.FC<InputTextAreaProps> = ({ name }) => {
-
+  
+  const { setIsAdded } = useContext(NotesContext);
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const message = ref.current?.value;
+    const text = ref.current?.value;
 
-    if (message) {
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Authorization": `Basic ${process.env.HARPERDB_API_KEY}`
-        },
-        body: JSON.stringify({
-          message
-        })
-
+    if (text) {
+      const data = {
+        category: name,
+        text: text
       }
 
-      const url = `${process.env.HARPERDB_CUSTOM_FUNCTIONS_URL}/api-v1/notes/add`;
-      const testurl = `${process.env.HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/`
+      const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/add/`;
 
       try {
-        const results = await fetch(testurl, requestOptions).then(r => r.json());
+        const results = await axios.post(url, data);
         console.log(results);
+        setIsAdded(prevState =>!prevState)
       } catch (error) {
         console.error(error);
       }
