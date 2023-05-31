@@ -3,42 +3,41 @@ import axios from 'axios';
 import Button from './Button';
 import { NotesContext } from '../note/Note';
 
-interface InputTextAreaProps {
+interface UpdateTextAreaProps {
   name: string;
-  addClassName?: string;
-  defaultValue?: string;
-  setIsEditing?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  addClassName: string;
+  defaultValue: string;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InputTextArea: React.FC<InputTextAreaProps> = ({ 
+const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({ 
   name,
   addClassName,
-  defaultValue="",
+  defaultValue,
   setIsEditing,
 }) => {
-  const { setIsAdded } = useContext(NotesContext);
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsEditing(false);
     const text = ref.current?.value;
 
-    if (text) {
-      const data = {
-        category: name,
-        text: text
-      }
+    // if (text) {
+    //   const data = {
+    //     category: name,
+    //     text: text
+    //   }
 
-      const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/add/`;
+    //   const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/add/`;
 
-      try {
-        const results = await axios.post(url, data);
-        console.log(results);
-        setIsAdded(prevState =>!prevState)
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    //   try {
+    //     const results = await axios.post(url, data);
+    //     console.log(results);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
   };
 
   return (
@@ -58,7 +57,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
         </div>
         <Button
           addClassName={`min-w-[80px] p-2 h-[50px] ${addClassName}`}
-          onClick={() => setIsEditing!(false)}
+          // onClick={() => setIsEditing(false)}
         >
           保存
         </Button>
@@ -67,4 +66,4 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
   )
 }
 
-export default InputTextArea;
+export default UpdateTextArea;

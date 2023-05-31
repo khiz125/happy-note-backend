@@ -1,10 +1,10 @@
 import { useState, createContext } from "react";
-import NotedList from "./NotedList";
+import RecordedList from "./RecordedList";
 import InputTextArea from "../components/InputTextArea";
 
 export const NotesContext = createContext({} as {
-  isAdded: boolean
-  setIsAdded: React.Dispatch<React.SetStateAction<boolean>>
+  isAdded: boolean;
+  setIsAdded: React.Dispatch<React.SetStateAction<boolean>>;
 })
 
 const Note = () => {
@@ -31,12 +31,12 @@ const Note = () => {
             <InputTextArea name="achievement" />
           </section>
           <section className=''>
-            <h3>これまでのハッピーリスト</h3>
-            <NotedList name="happy" />
-            <h3>これまでの感謝リスト</h3>
-            <NotedList name="grateful" />
-            <h3>これまでの達成リスト</h3>
-            <NotedList name="achievement" />
+            <h3 className="mb-2">これまでのハッピーリスト</h3>
+            <RecordedList name="happy" />
+            <h3 className="mb-2">これまでの感謝リスト</h3>
+            <RecordedList name="grateful" />
+            <h3 className="mb-2">これまでの達成リスト</h3>
+            <RecordedList name="achievement" />
           </section>
         </NotesContext.Provider>
       </div>
