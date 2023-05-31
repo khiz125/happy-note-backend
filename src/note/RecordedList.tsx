@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useContext } from "react"
 import axios from 'axios';
 import { NotesContext } from "./Note";
+import Memo from "./Memo";
 
 interface NotedListProps {
   name: string;
 }
 
-const NotedList: React.FC<NotedListProps> = ({ name }) => {
+const RecordedList: React.FC<NotedListProps> = ({ name }) => {
 
   const { isAdded } = useContext(NotesContext);
-  const [notedList, setNotedList] = useState<Record<string, any>[]>([]);
+  const [recordedList, setRecordedList] = useState<Record<string, any>[]>([]);
+  const [noteId, setNoteId] = useState<Record<string, any>[]>([]);
 
   useEffect(() => {
     const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/list/`;
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-        setNotedList(response.data);
+        setRecordedList(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -26,16 +28,18 @@ const NotedList: React.FC<NotedListProps> = ({ name }) => {
 
   return (
     <div>
-      {notedList.map((note: Record<string, any>) => {
+      {recordedList.map((note: Record<string, any>) => {
         if (name === note.category)
-        return (
-          <ul>
-            <li className="list-disc list-inside pl-10 my-4">{note.text}</li>
-          </ul>
-        )
+          return (
+            <div key={note.id}>
+              <Memo
+                note={note}
+              />
+            </div>
+          )
       })}
-    </div>
+    </div >
   )
 }
 
-export default NotedList;
+export default RecordedList;
