@@ -8,6 +8,7 @@ interface UpdateTextAreaProps {
   addClassName: string;
   defaultValue: string;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  note: Record<string, any>;
 }
 
 const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({ 
@@ -15,6 +16,7 @@ const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
   addClassName,
   defaultValue,
   setIsEditing,
+  note,
 }) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -23,21 +25,22 @@ const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
     setIsEditing(false);
     const text = ref.current?.value;
 
-    // if (text) {
-    //   const data = {
-    //     category: name,
-    //     text: text
-    //   }
+    if (text) {
+      const data = {
+        id: note.id,
+        category: note.name,
+        text: text
+      }
 
-    //   const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/add/`;
+      const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/update/`;
 
-    //   try {
-    //     const results = await axios.post(url, data);
-    //     console.log(results);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
+      try {
+        const results = await axios.post(url, data);
+        console.log(results);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -57,7 +60,8 @@ const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
         </div>
         <Button
           addClassName={`min-w-[80px] p-2 h-[50px] ${addClassName}`}
-          // onClick={() => setIsEditing(false)}
+          type="submit"
+          onClick={() => setIsEditing(false)}
         >
           保存
         </Button>
