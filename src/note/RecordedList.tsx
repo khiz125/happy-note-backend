@@ -9,22 +9,26 @@ interface NotedListProps {
 
 const RecordedList: React.FC<NotedListProps> = ({ name }) => {
 
-  const { isAdded } = useContext(NotesContext);
+  const { isRequested } = useContext(NotesContext);
   const [recordedList, setRecordedList] = useState<Record<string, any>[]>([]);
-  const [noteId, setNoteId] = useState<Record<string, any>[]>([]);
 
   useEffect(() => {
+    const requestOptions = { 
+      headers: { 
+        'Authorization': `Basic ${process.env.REACT_APP_HARPERDB_API_KEY}`, 
+      } 
+    } 
     const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/list/`;
     const fetchData = async () => {
       try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, requestOptions);
         setRecordedList(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, [isAdded])
+  }, [isRequested]);
 
   return (
     <div>

@@ -3,13 +3,13 @@ import RecordedList from "./RecordedList";
 import InputTextArea from "../components/InputTextArea";
 
 export const NotesContext = createContext({} as {
-  isAdded: boolean;
-  setIsAdded: React.Dispatch<React.SetStateAction<boolean>>;
+  isRequested: boolean;
+  setIsRequested: React.Dispatch<React.SetStateAction<boolean>>;
 })
 
 const Note = () => {
 
-  const [isAdded, setIsAdded] = useState<boolean>(false);
+  const [isRequested, setIsRequested] = useState<boolean>(false);
 
   return (
     <main className='box-border text-gray-600 w-full my-10'>
@@ -18,8 +18,8 @@ const Note = () => {
         <h3 className="mt-10">今日のハッピーノート</h3>
         <NotesContext.Provider
           value={{
-            isAdded, 
-            setIsAdded
+            isRequested, 
+            setIsRequested,
           }}
         >
           <section className='flex flex-col items-start justify-center my-10'>

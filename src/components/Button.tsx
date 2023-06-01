@@ -11,24 +11,25 @@ const Button = ({
   className,
   addClassName,
   children,
+  type,
   variant = "primary",
   ...props
 }: ButtonProps) => {
   let btnStyle;
   switch (variant) {
     case "primary":
-      btnStyle = `border-gray-200 bg-[#F0F8FF] py-2 w-full border-2 rounded-[20px] text-[#333] hover:bg-[#61C697] hover:border-[#61C697] ${addClassName}`;
+      btnStyle = `border-gray-200 bg-[#F0F8FF] py-2 w-full border-2 rounded-[20px] text-[#333] hover:bg-[#61C697] hover:text-white hover:border-[#61C697] ${addClassName}`;
       break;
     case "light-gray":
-      btnStyle = `border-2 border-gray-200 bg-[#BABABA] py-3 w-full rounded-[20px] text-white ${addClassName}`;
+      btnStyle = `border-2 border-gray-200 bg-[#BABABA] py-3 w-full rounded-[20px] text-white hover:bg-[#778899] ${addClassName}`;
       break;
     case "lemon-chiffon":
-      btnStyle = `border-2 border-gray-200 bg-[#FFFACD] py-3 w-full rounded-[20px] text-[#333] ${addClassName}`;
+      btnStyle = `border-2 border-gray-200 bg-[#FFFACD] py-3 w-full rounded-[20px] text-[#333] hover:bg-[#DAA520] hover:text-white ${addClassName}`;
       break;
   }
 
   return (
-    <button className={className || btnStyle} {...props}>
+    <button className={className || btnStyle} type={type} {...props}>
       {children}
     </button>
   );
