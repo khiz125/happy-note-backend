@@ -10,10 +10,10 @@ interface InputTextAreaProps {
   setIsEditing?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
 }
 
-const InputTextArea: React.FC<InputTextAreaProps> = ({ 
+const InputTextArea: React.FC<InputTextAreaProps> = ({
   name,
   addClassName,
-  defaultValue="",
+  defaultValue = "",
   setIsEditing,
 }) => {
   const { setIsRequested } = useContext(NotesContext);
@@ -34,7 +34,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
         const results = await axios.post(url, data);
         console.log(results);
         setInputText("");
-        setIsRequested(prevState =>!prevState);
+        setIsRequested(prevState => !prevState);
       } catch (error) {
         console.error(error);
       }
@@ -42,28 +42,30 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="flex mb-2">
-        <div className='shadow-xl rounded-[20px] border border-gray-200 w-full mr-10'>
-          <textarea
-            className='relative hidden-scrollbar text-[#8A8684] min-w-[300px]
+    <div className="mb-2 w-full">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-2 w-full">
+          <div className='shadow-xl rounded-[20px] border border-gray-200 mb-4'>
+            <textarea
+              className='relative hidden-scrollbar text-[#8A8684] min-w-[300px]
             border-gray-200 outline-none focus:border-[#D9D9D9] w-full p-4 rounded-[20px]'
-            name={`${name}`}
-            id=""
-            cols={40}
-            rows={2}
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-          />
+              name={`${name}`}
+              id=""
+              cols={40}
+              rows={2}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+            />
+          </div>
+          <Button
+            addClassName={`w-[80px] p-2 h-[50px] ${addClassName}`}
+            onClick={() => setIsRequested(false)}
+          >
+            保存
+          </Button>
         </div>
-        <Button
-          addClassName={`min-w-[80px] p-2 h-[50px] ${addClassName}`}
-          onClick={() => setIsRequested(false)}
-        >
-          保存
-        </Button>
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 

@@ -9,7 +9,7 @@ interface NotedListProps {
 
 const RecordedList: React.FC<NotedListProps> = ({ name }) => {
 
-  const { isRequested } = useContext(NotesContext);
+  const { isRequested, isEditing } = useContext(NotesContext);
   const [recordedList, setRecordedList] = useState<Record<string, any>[]>([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const RecordedList: React.FC<NotedListProps> = ({ name }) => {
       }
     };
     fetchData();
-  }, [isRequested]);
+  }, [isRequested, isEditing]);
 
   return (
     <div>

@@ -5,11 +5,14 @@ import InputTextArea from "../components/InputTextArea";
 export const NotesContext = createContext({} as {
   isRequested: boolean;
   setIsRequested: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 })
 
 const Note = () => {
 
   const [isRequested, setIsRequested] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   return (
     <main className='box-border text-gray-600 w-full my-10'>
@@ -20,6 +23,8 @@ const Note = () => {
           value={{
             isRequested, 
             setIsRequested,
+            isEditing,
+            setIsEditing,
           }}
         >
           <section className='flex flex-col items-start justify-center my-10'>

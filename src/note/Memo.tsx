@@ -11,8 +11,11 @@ const Memo: React.FC<MemoProps> = ({
   note,
 }) => {
 
-  const { isRequested, setIsRequested } = useContext(NotesContext);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { 
+    setIsRequested,
+    isEditing, 
+    setIsEditing
+   } = useContext(NotesContext);
 
   const handleRemove = async () => {
     const id = note.id;
@@ -43,14 +46,15 @@ const Memo: React.FC<MemoProps> = ({
             note={note}
           />
           :
-          <div className="flex justify-between" >
-            <div className='pl-10 my-4 w-full'>
-              ■ {note.text}
+          <div>
+            <div className='my-4 w-full border-b-[1px]'>
+              {note.text}
             </div>
-            <div>
+            <div className='flex'>
               <Button
+                type="button"
                 variant="lemon-chiffon"
-                addClassName="my-1"
+                addClassName="flex items-center justify-center my-1 w-[60px] h-[40px] text-sm mr-2"
                 onClick={() => {
                   setIsEditing(true)
                 }}
@@ -58,8 +62,9 @@ const Memo: React.FC<MemoProps> = ({
                 編集
               </Button>
               <Button
+                type="button"
                 variant="light-gray"
-                addClassName="my-1"
+                addClassName="flex items-center justify-center my-1 w-[60px] h-[40px] text-sm ml-2"
                 onClick={handleRemove}
               >
                 削除
