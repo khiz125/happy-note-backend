@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
 import axios from 'axios';
+import utils from "../utils/utils";
 import { NotesContext } from "./Note";
 import Memo from "./Memo";
 
@@ -13,15 +14,22 @@ const RecordedList: React.FC<NotedListProps> = ({ name }) => {
   const [recordedList, setRecordedList] = useState<Record<string, any>[]>([]);
 
   useEffect(() => {
-    const requestOptions = { 
-      headers: { 
-        'Authorization': `Basic ${process.env.REACT_APP_HARPERDB_API_KEY}`, 
-      } 
-    } 
-    const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/list/`;
+    // const requestOptions = { 
+    //   headers: { 
+    //     'Authorization': `Basic ${process.env.REACT_APP_HARPERDB_API_KEY}`, 
+    //   } 
+    // } 
+    // const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/list/`;
+    const url = "/happynote/notes/list/";
     const fetchData = async () => {
+      // try {
+      //   const response = await axios.get(url, requestOptions);
+      //   setRecordedList(response.data);
+      // } catch (error) {
+      //   console.error(error);
+      // }
       try {
-        const response = await axios.get(url, requestOptions);
+        const response = await utils.request.get(url);
         setRecordedList(response.data);
       } catch (error) {
         console.error(error);
