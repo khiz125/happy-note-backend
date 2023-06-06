@@ -1,56 +1,33 @@
-import React, { useState, useEffect, useContext } from "react"
-import axios from 'axios';
-import utils from "../utils/utils";
-import { NotesContext } from "./Note";
+import React from "react"
+import UpdateTextArea from "../components/UpdateTextArea";
 import Memo from "./Memo";
 
 interface NotedListProps {
   name: string;
+  list: Record<string, any>;
 }
 
-const RecordedList: React.FC<NotedListProps> = ({ name }) => {
-
-  const { isRequested, isEditing } = useContext(NotesContext);
-  const [recordedList, setRecordedList] = useState<Record<string, any>[]>([]);
-
-  useEffect(() => {
-    // const requestOptions = { 
-    //   headers: { 
-    //     'Authorization': `Basic ${process.env.REACT_APP_HARPERDB_API_KEY}`, 
-    //   } 
-    // } 
-    // const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/list/`;
-    const url = "/happynote/notes/list/";
-    const fetchData = async () => {
-      // try {
-      //   const response = await axios.get(url, requestOptions);
-      //   setRecordedList(response.data);
-      // } catch (error) {
-      //   console.error(error);
-      // }
-      try {
-        const response = await utils.request.get(url);
-        setRecordedList(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [isRequested, isEditing]);
+const RecordedList: React.FC<NotedListProps> = ({
+  name,
+  list,
+}) => {
 
   return (
-    <div>
-      {recordedList.map((note: Record<string, any>) => {
-        if (name === note.category)
-          return (
-            <div key={note.id}>
-              <Memo
-                note={note}
-              />
-            </div>
-          )
-      })}
-    </div >
+    list.isEditing ?
+      (
+        <UpdateTextArea
+          name={list.category}
+          addClassName={"max-w-[100px]"}
+          defaultValue={list.recorded.text}
+          list={list.recorded}
+        />
+      )
+      :
+      (
+        <Memo
+          list={list.recorded}
+        />
+      )
   )
 }
 

@@ -57,12 +57,13 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
               onChange={(e) => setInputText(e.target.value)}
             />
           </div>
-          <Button
-            addClassName={`w-[80px] p-2 h-[50px] ${addClassName}`}
-            onClick={() => setIsRequested(false)}
-          >
-            保存
-          </Button>
+          <div className='w-[80px] p-2 h-[50px]'>
+            <Button
+              onClick={() => setIsRequested(false)}
+            >
+              保存
+            </Button>
+          </div>
         </div>
       </form>
     </div>

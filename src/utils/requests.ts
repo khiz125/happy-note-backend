@@ -1,4 +1,3 @@
-import { useState } from "react";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 const BaseUrl = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}`;
@@ -9,7 +8,6 @@ const api: AxiosInstance = axios.create({
 const setupConfig = (config: AxiosRequestConfig): AxiosRequestConfig => {
   return {
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Basic ${process.env.REACT_APP_HARPERDB_API_KEY}`,
     },
     ...config,
