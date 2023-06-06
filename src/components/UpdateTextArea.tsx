@@ -1,5 +1,5 @@
 import React, { useRef, useContext } from 'react';
-import axios from 'axios';
+import utils from "../utils/utils";
 import Button from './Button';
 import { NotesContext } from '../note/Note';
 
@@ -7,36 +7,36 @@ interface UpdateTextAreaProps {
   name: string;
   addClassName: string;
   defaultValue: string;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  note: Record<string, any>;
+  list: {[key: string]: string | boolean};
 }
 
 const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
   name,
   addClassName,
   defaultValue,
-  setIsEditing,
-  note,
+  list,
 }) => {
+  const { setLists } = useContext(NotesContext);
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLists((prevState) => 
+    prevState.map((lists) => list.category === lists.category
+    ? {...lists, isEditing: false}: lists))
     const text = ref.current?.value;
 
     if (text) {
       const data = {
-        id: note.id,
+        id: list.id,
         category: name,
         text: text
       }
 
       const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/update/`;
-
       try {
-        const results = await axios.put(url, data);
+        const results = await utils.request.put(url, data);
         console.log(results);
-        setIsEditing(false);
       } catch (error) {
         console.error(error);
       }
