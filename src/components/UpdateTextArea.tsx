@@ -16,14 +16,21 @@ const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
   defaultValue,
   list,
 }) => {
-  const { setLists } = useContext(NotesContext);
+  const { lists, setLists } = useContext(NotesContext);
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setLists((prevState) => 
-    prevState.map((lists) => list.category === lists.category
-    ? {...lists, isEditing: false}: lists))
+    const tempList = [...lists];
+    for (let i=0; i<tempList.length; i++) {
+      for (let j=0; j<tempList[i].recorded.length; j++) {
+        const note = tempList[i].recorded[j];
+        if (note.id === list.id) {
+          note.isEditing = false;
+        }
+      }
+    }
+    setLists(tempList);
     const text = ref.current?.value;
 
     if (text) {

@@ -34,7 +34,6 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
         const results = await axios.post(url, data);
         console.log(results);
         setInputText("");
-        setIsRequested(prevState => !prevState);
       } catch (error) {
         console.error(error);
       }
@@ -59,7 +58,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
           </div>
           <div className='w-[80px] p-2 h-[50px]'>
             <Button
-              onClick={() => setIsRequested(false)}
+              onClick={() => setIsRequested(prevState => !prevState)}
             >
               保存
             </Button>

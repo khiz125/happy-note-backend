@@ -9,13 +9,13 @@ interface MemoProps {
 const Memo: React.FC<MemoProps> = ({
   list
 }) => {
-
   const {
+    lists,
     setLists,
     setIsRequested
   } = useContext(NotesContext);
 
-  const handleRemove = async () => {
+  const handleRemove = async (removeId: string) => {
     const id = list.id;
     const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/remove/${id}/`;
 
@@ -28,13 +28,17 @@ const Memo: React.FC<MemoProps> = ({
     }
   }
 
-  const handleEdit = (category: string) => {
-      setLists((prevState) =>
-      prevState.map((cat) => (cat.category === category 
-      ? {...cat, isEditing: true} 
-      : cat
-      ))
-    )
+  const handleEdit = (id: string) => {
+    const tempList = [...lists];
+    for (let i=0; i<tempList.length; i++) {
+      for (let j=0; j<tempList[i].recorded.length; j++) {
+        const note = tempList[i].recorded[j];
+        if (note.id === id) {
+          note.isEditing = true;
+        }
+      }
+    }
+    setLists(tempList);
   }
 
   return (
@@ -47,7 +51,7 @@ const Memo: React.FC<MemoProps> = ({
           type="button"
           variant="lemon-chiffon"
           addClassName="flex items-center justify-center my-1 w-[60px] h-[40px] text-sm mr-2"
-          onClick={() => handleEdit(list.category)}
+          onClick={() => handleEdit(list.id)}
         >
           編集
         </Button>
@@ -55,7 +59,7 @@ const Memo: React.FC<MemoProps> = ({
           type="button"
           variant="light-gray"
           addClassName="flex items-center justify-center my-1 w-[60px] h-[40px] text-sm ml-2"
-          onClick={handleRemove}
+          onClick={() => handleRemove(list.id)}
         >
           削除
         </Button>
