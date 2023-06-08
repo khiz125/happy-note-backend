@@ -34,6 +34,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
         const results = await axios.post(url, data);
         console.log(results);
         setInputText("");
+        setIsRequested(prevState => !prevState);
       } catch (error) {
         console.error(error);
       }

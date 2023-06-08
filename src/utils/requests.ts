@@ -39,6 +39,7 @@ export const put = (
 
 export const remove = (
   url: string,
+  data: any = {},
   config: AxiosRequestConfig = {}
 ): Promise<AxiosResponse<any, any>> => {
   return api.delete(url, setupConfig(config));

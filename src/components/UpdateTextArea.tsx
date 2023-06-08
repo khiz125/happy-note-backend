@@ -7,7 +7,7 @@ interface UpdateTextAreaProps {
   name: string;
   addClassName: string;
   defaultValue: string;
-  list: {[key: string]: string | boolean};
+  list: Record<string, any>;
 }
 
 const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
@@ -16,22 +16,23 @@ const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
   defaultValue,
   list,
 }) => {
-  const { lists, setLists } = useContext(NotesContext);
+  const { lists, setLists, setIsRequested } = useContext(NotesContext);
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const text = ref.current?.value;
     const tempList = [...lists];
     for (let i=0; i<tempList.length; i++) {
       for (let j=0; j<tempList[i].recorded.length; j++) {
         const note = tempList[i].recorded[j];
         if (note.id === list.id) {
           note.isEditing = false;
+          note.text = text;
         }
       }
     }
     setLists(tempList);
-    const text = ref.current?.value;
 
     if (text) {
       const data = {
@@ -43,6 +44,7 @@ const UpdateTextArea: React.FC<UpdateTextAreaProps> = ({
       const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/update/`;
       try {
         const results = await utils.request.put(url, data);
+        setIsRequested(prevState => !prevState);
         console.log(results);
       } catch (error) {
         console.error(error);
