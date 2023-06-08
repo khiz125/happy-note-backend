@@ -45,14 +45,14 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
     <div className="mb-2 w-full">
       <form onSubmit={handleSubmit}>
         <div className="mb-2 w-full">
-          <div className='shadow-xl rounded-[20px] border border-gray-200 mb-4'>
+          <div className='shadow-xl rounded-[20px] border border-gray-200 mb-2'>
             <textarea
               className='relative hidden-scrollbar text-[#8A8684] min-w-[300px]
             border-gray-200 outline-none focus:border-[#D9D9D9] w-full p-4 rounded-[20px]'
               name={`${name}`}
               id=""
               cols={40}
-              rows={2}
+              rows={1}
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
             />
