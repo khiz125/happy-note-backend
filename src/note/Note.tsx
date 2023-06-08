@@ -20,40 +20,46 @@ const Note = () => {
     {
       category: "happy",
       ja: "ハッピー",
-      isEditing: false,
-      recorded: {}
+      recorded: []
     },
     {
       category: "grateful",
       ja: "感謝",
-      isEditing: false,
-      recorded: {}
+      recorded: []
     },
     {
       category: "achievement",
       ja: "達成",
-      isEditing: false,
-      recorded: {}
+      recorded: []
     }
   ]);
+  let index = 0;
 
   useEffect(() => {
     const url = "/happynote/notes/list/";
+    const tempList = [...lists];
     const fetchData = async () => {
       try {
-        const response = await utils.request.get(url, {});
-        response.data.map((data:Record<string, any>) => {
-          return setLists((prevState) => 
-          prevState.map((list) => list.category === data.category
-          ? {...list, recorded: data}: list)
-          )
-        })
+        const response = await utils.request.get(url);
+        while (index < tempList.length) {
+          for (let i=0; i<response.data.length; i++) {
+            response.data[i].isEditing = false;
+            if (response.data[i].category === tempList[index].category) {
+              const flag = tempList[index].recorded.map((item:Record<string, any>) => item.id).includes(response.data[i].id)
+              if (!flag) {
+                tempList[index].recorded.push(response.data[i]);
+              }
+            }
+          }
+          index += 1;
+        }
+        setLists(tempList);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, []);
+  }, [isRequested]);
 
   return (
     <main className='box-border text-gray-600 w-full my-10'>
@@ -84,7 +90,6 @@ const Note = () => {
                 <div key={index}>
                   <h3 className="mb-2 text-xl font-medium">これまでの{`${list.ja}`}リスト</h3>
                   <RecordedList
-                    name={`${list.category}`}
                     list={list}
                   />
                 </div>
