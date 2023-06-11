@@ -16,12 +16,13 @@ const Memo: React.FC<MemoProps> = ({
   } = useContext(NotesContext);
 
   const handleRemove = async () => {
+
     const id = list.id;
     const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/remove/${id}/`;
-
     try {
       const response = await utils.request.remove(url, {id: id});
       setIsRequested(prevState => !prevState);
+      
       console.log(response);
 
       const tempList = [...lists];
