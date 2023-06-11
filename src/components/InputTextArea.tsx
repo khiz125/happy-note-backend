@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import utils from "../utils/utils";
 import Button from './Button';
 import { NotesContext } from '../note/Note';
 
@@ -23,6 +24,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
     event.preventDefault();
 
     if (inputText) {
+
       const data = {
         category: name,
         text: inputText
@@ -31,7 +33,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
       const url = `${process.env.REACT_APP_HARPERDB_CUSTOM_FUNCTIONS_URL}/happynote/notes/add/`;
 
       try {
-        const results = await axios.post(url, data);
+        const results = await utils.request.post(url, data);
         console.log(results);
         setInputText("");
         setIsRequested(prevState => !prevState);
